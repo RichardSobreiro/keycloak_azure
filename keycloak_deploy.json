@@ -1,11 +1,12 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {"password": {
-        "type": "securestring",
-        "metadata": {
-            "description": "User Password for ssh access"
-        }
+    "parameters": {
+        "password": {
+            "type": "securestring",
+            "metadata": {
+                "description": "User Password for ssh access"
+            }
         },
         "vmname": {
             "type": "string",
