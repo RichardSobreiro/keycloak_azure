@@ -7,20 +7,64 @@
             "description": "User Password for ssh access"
         }
         },
-        "vmname": {"type": "string",
-        "metadata": {
-            "description": "name of the Linux system"
-        }}
+        "vmname": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Linux system"
+            }
+        },
+        "vmstorage": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Storage Account"
+            }
+        },
+        "vmnsg": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Security Group"
+            }
+        },
+        "vnet": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Virtual Network"
+            }
+        },
+        "keycloaksubnet": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Keycloak subnet"
+            }
+        },
+        "vmnic": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Network Interface"
+            }
+        },
+        "vmpublicip": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Public IP"
+            }
+        },
+        "osdisk": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the OS Disk"
+            }
+        }
     },
     "variables": {
         "vmname": "[parameters('vmname')]",
-        "vmstorage": "[toLower(concat(variables('vmname'),'labstorage'))]",
-        "vmnsg": "[concat(variables('vmname'),'-nsg')]",
-        "vnet": "[concat(variables('vmname'),'-VirtualNetwork')]",
-        "keycloaksubnet": "[concat(variables('vnet'),'-Subnet')]",
-        "vmnic": "[concat(variables('vmname'),'-NIC')]",
-        "vmpublicip": "[concat(variables('vmname'),'-PublicIP')]",
-        "osdisk": "[concat(variables('vmname'),'-OSDisk')]",
+        "vmstorage": "[parameters('vmstorage')]",
+        "vmnsg": "[parameters('vmnsg')]",
+        "vnet": "[parameters('vnet')]",
+        "keycloaksubnet": "[parameters('keycloaksubnet')]",
+        "vmnic": "[parameters('vmnic')]",
+        "vmpublicip": "[parameters('vmpublicip')]",
+        "osdisk": "[parameters('osdisk')]",
         "customscript": "[concat(variables('vmname'),'/customScript1')]"
     },
     "resources": [
@@ -162,7 +206,7 @@
             },
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "Standard_A2_v2"
+                    "vmSize": "Standard_B1s"
                 },
                 "osProfile": {
                     "computerName": "[toLower(variables('vmname'))]",
