@@ -9,7 +9,7 @@
             "value": "Pa$$w0rd123"
         },
         "vmstorage": {
-            "value": "useast2-stacc-meddist-keycloak"
+            "value": "useast2stmeddistkeycloak"
         },
         "vmnsg": {
             "value": "useast2-nsg-meddist-keycloak"

@@ -93,7 +93,7 @@ cfssl gencert -initca ca-csr.json | cfssljson -bare ca
 
 cat > keycloak-csr.json <<EOF
 {
-  "CN": "keycloak.cuda.local",
+  "CN": "useast2-vm-meddist-keycloak.eastus2.cloudapp.azure.com",
   "key": {
     "algo": "rsa",
     "size": 2048
