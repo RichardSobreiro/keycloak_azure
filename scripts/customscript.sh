@@ -65,7 +65,7 @@ EOF
 
 cat > ca-csr.json <<EOF
 {
-  "CN": "admin.cuda.local",
+  "CN": "useast2-vm-meddist-keycloak.eastus2.cloudapp.azure.com",
   "key": {
     "algo": "rsa",
     "size": 2048
@@ -114,7 +114,7 @@ cfssl gencert \
   -ca=ca.pem \
   -ca-key=ca-key.pem \
   -config=ca-config.json \
-  -hostname=keycloak.cudanet.com \
+  -hostname=useast2-vm-meddist-keycloak.eastus2.cloudapp.azure.com \
   -profile=keycloak \
   keycloak-csr.json | cfssljson -bare keycloak
 
