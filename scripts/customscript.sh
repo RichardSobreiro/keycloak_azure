@@ -51,8 +51,8 @@ sudo apt-get update
 sudo apt-get install azure-cli
 
 ## Download certificate from azure blob storage
-sudo az storage blob download --file /etc/nginx/cert.key --name domain.key --container-name certificate --auth-mode key --account-name useast2saccgeneralthings --account-key QKi15Z1eHtsrAei/0qinqETOCNT0LIMZSgRI33lCyeeyXCtKNZwf4eQASprkJ9uxDr7OzqaYNKIa+ASt4Dv6LA==
-sudo az storage blob download --file /etc/nginx/cert.crt --name domain.crt --container-name certificate --auth-mode key --account-name useast2saccgeneralthings --account-key QKi15Z1eHtsrAei/0qinqETOCNT0LIMZSgRI33lCyeeyXCtKNZwf4eQASprkJ9uxDr7OzqaYNKIa+ASt4Dv6LA==
+sudo az storage blob download --file /etc/nginx/cert.key --name domain.key --container-name certificate --auth-mode key --account-name --account-key 
+sudo az storage blob download --file /etc/nginx/cert.crt --name domain.crt --container-name certificate --auth-mode key --account-name --account-key 
 
 echo $(pwd)
 
