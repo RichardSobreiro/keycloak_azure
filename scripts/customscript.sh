@@ -133,7 +133,7 @@ server {
     
     listen 80;
     listen 443 default ssl;
-    server_name keycloak.cudanet.com;
+    server_name useast2-vm-meddist-keycloak.eastus2.cloudapp.azure.com;
 
     ssl_certificate           /etc/nginx/cert.crt;
     ssl_certificate_key       /etc/nginx/cert.key;
