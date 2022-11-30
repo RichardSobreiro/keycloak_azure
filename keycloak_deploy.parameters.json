@@ -3,31 +3,31 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "vmname": {
-            "value": "useast2-vm-meddist-keycloak"
+            "value": "eastus2-vm-meddist-keycloak"
         },
         "password": {
             "value": "Pa$$w0rd123"
         },
         "vmstorage": {
-            "value": "useast2stmeddistkeycloak"
+            "value": "eastus2stmeddistkeycloak"
         },
         "vmnsg": {
-            "value": "useast2-nsg-meddist-keycloak"
+            "value": "eastus2-nsg-meddist-keycloak"
         },
         "vnet": {
-            "value": "useast2-vnet-meddist-keycloak"
+            "value": "eastus2-vnet-meddist-keycloak"
         },
         "keycloaksubnet": {
-            "value": "useast2-subnet-meddist-keycloak"
+            "value": "eastus2-subnet-meddist-keycloak"
         },
         "vmnic": {
-            "value": "useast2-nic-meddist-keycloak"
+            "value": "eastus2-nic-meddist-keycloak"
         },
         "vmpublicip": {
-            "value": "useast2-pip-meddist-keycloak"
+            "value": "eastus2-pip-meddist-keycloak"
         },
         "osdisk": {
-            "value": "useast2-osdisk-meddist-keycloak"
+            "value": "eastus2-osdisk-meddist-keycloak"
         }
     }
 }

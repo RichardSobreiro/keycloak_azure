@@ -2,6 +2,18 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "storageaccountname": {
+            "type": "string",
+            "metadata": {
+                "description": "Storage Account name of the custom script"
+            }
+        },
+        "storageaccountkey": {
+            "type": "string",
+            "metadata": {
+                "description": "Storage Account key of the custom script"
+            }
+        },
         "password": {
             "type": "securestring",
             "metadata": {
@@ -10,66 +22,66 @@
         },
         "vmname": {
             "type": "string",
-            "defaultValue": "useast2-vm-meddist-keycloak",
+            "defaultValue": "eastus2-vm-meddist-keycloak",
             "metadata": {
                 "description": "Name of the Linux system",
-                "defaultValue": "useast2-vm-meddist-keycloak"
+                "defaultValue": "eastus2-vm-meddist-keycloak"
             }
         },
         "vmstorage": {
             "type": "string",
-            "defaultValue": "useast2stmeddistkeycloak",
+            "defaultValue": "eastus2stmeddistkeycloak",
             "metadata": {
                 "description": "Name of the Storage Account",
-                "defaultValue": "useast2stmeddistkeycloak"
+                "defaultValue": "eastus2stmeddistkeycloak"
             }
         },
         "vmnsg": {
             "type": "string",
-            "defaultValue": "useast2-nsg-meddist-keycloak",
+            "defaultValue": "eastus2-nsg-meddist-keycloak",
             "metadata": {
                 "description": "Name of the Security Group",
-                "defaultValue": "useast2-nsg-meddist-keycloak"
+                "defaultValue": "eastus2-nsg-meddist-keycloak"
             }
         },
         "vnet": {
             "type": "string",
-            "defaultValue": "useast2-vnet-meddist-keycloak",
+            "defaultValue": "eastus2-vnet-meddist-keycloak",
             "metadata": {
                 "description": "Name of the Virtual Network",
-                "defaultValue": "useast2-vnet-meddist-keycloak"
+                "defaultValue": "eastus2-vnet-meddist-keycloak"
             }
         },
         "keycloaksubnet": {
             "type": "string",
-            "defaultValue": "useast2-subnet-meddist-keycloak",
+            "defaultValue": "eastus2-subnet-meddist-keycloak",
             "metadata": {
                 "description": "Name of the Keycloak subnet",
-                "defaultValue": "useast2-subnet-meddist-keycloak"
+                "defaultValue": "eastus2-subnet-meddist-keycloak"
             }
         },
         "vmnic": {
             "type": "string",
-            "defaultValue": "useast2-nic-meddist-keycloak",
+            "defaultValue": "eastus2-nic-meddist-keycloak",
             "metadata": {
                 "description": "Name of the Network Interface",
-                "defaultValue": "useast2-nic-meddist-keycloak"
+                "defaultValue": "eastus2-nic-meddist-keycloak"
             }
         },
         "vmpublicip": {
             "type": "string",
-            "defaultValue": "useast2-pip-meddist-keycloak",
+            "defaultValue": "eastus2-pip-meddist-keycloak",
             "metadata": {
                 "description": "Name of the Public IP",
-                "defaultValue": "useast2-pip-meddist-keycloak"
+                "defaultValue": "eastus2-pip-meddist-keycloak"
             }
         },
         "osdisk": {
             "type": "string",
-            "defaultValue": "useast2-osdisk-meddist-keycloak",
+            "defaultValue": "eastus2-osdisk-meddist-keycloak",
             "metadata": {
                 "description": "Name of the OS Disk",
-                "defaultValue": "useast2-osdisk-meddist-keycloak"
+                "defaultValue": "eastus2-osdisk-meddist-keycloak"
             }
         }
     },
@@ -274,13 +286,15 @@
                 "type": "CustomScript",
                 "typeHandlerVersion": "2.1",
                 "autoUpgradeMinorVersion": true,
-                "settings": {
-                    "fileUris": [
-                        "https://raw.githubusercontent.com/RichardSobreiro/keycloak_azure/main/scripts/customscript.sh"
-                    ]
-                },
+                "settings": {},
                 "protectedSettings": {
-                    "commandToExecute": "nohup bash customscript.sh"
+                    "commandToExecute": "nohup bash customscript.sh",
+                    "storageAccountName": "[variables('myStorageAccountName')]",
+                    "storageAccountKey": "[variables('myStorageAccountKey')]",
+                    "managedIdentity" : {},
+                    "fileUris": [
+                        "https://useast2saccgeneralthings.blob.core.windows.net/customscript/customscript.sh"
+                    ]
                 }
             }
         }

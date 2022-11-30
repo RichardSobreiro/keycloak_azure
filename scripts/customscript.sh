@@ -37,93 +37,107 @@ sudo apt-get -y install nginx
 # Install keycloak as a docker container
 sudo docker run -d -p 8080:8080 -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=pass -e PROXY_ADDRESS_FORWARDING=true jboss/keycloak
 
+# Azure cli
+## Get packages needed for the install process:
+sudo apt-get update
+sudo apt-get install ca-certificates curl apt-transport-https lsb-release gnupg
+## Download and install the Microsoft signing key:
+curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
+## Add the Azure CLI software repository:
+AZ_REPO=$(lsb_release -cs)
+echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+## Update repository information and install the azure-cli package:
+sudo apt-get update
+sudo apt-get install azure-cli
+
+## Download certificate from azure blob storage
+sudo az storage blob download --file /etc/nginx/cert.key --name domain.key --container-name certificate --auth-mode key --account-name useast2saccgeneralthings --account-key QKi15Z1eHtsrAei/0qinqETOCNT0LIMZSgRI33lCyeeyXCtKNZwf4eQASprkJ9uxDr7OzqaYNKIa+ASt4Dv6LA==
+sudo az storage blob download --file /etc/nginx/cert.crt --name domain.crt --container-name certificate --auth-mode key --account-name useast2saccgeneralthings --account-key QKi15Z1eHtsrAei/0qinqETOCNT0LIMZSgRI33lCyeeyXCtKNZwf4eQASprkJ9uxDr7OzqaYNKIa+ASt4Dv6LA==
 
 echo $(pwd)
 
-echo "Generating the  certificates for nginx configuration"
+# echo "Generating the  certificates for nginx configuration"
+
+# # Generating the certificates for NGINX configuration
+# {
+
+# cat > ca-config.json <<EOF
+# {
+#   "signing": {
+#     "default": {
+#       "expiry": "8760h"
+#     },
+#     "profiles": {
+#       "keycloak": {
+#         "usages": ["signing", "key encipherment", "server auth", "client auth"],
+#         "expiry": "8760h"
+#       }
+#     }
+#   }
+# }
+# EOF
+
+# cat > ca-csr.json <<EOF
+# {
+#   "CN": "eastus2-vm-meddist-keycloak.eastus2.cloudapp.azure.com",
+#   "key": {
+#     "algo": "rsa",
+#     "size": 2048
+#   },
+#   "names": [
+#     {
+#       "C": "US",
+#       "L": "SF",
+#       "O": "Keycloak",
+#       "OU": "CA",
+#       "ST": "CA"
+#     }
+#   ]
+# }
+# EOF
+
+# cfssl gencert -initca ca-csr.json | cfssljson -bare ca
+
+# }
 
 
-# Generating the certificates for NGINX configuration
+# # Server certificate
 
-{
+# { 
 
-cat > ca-config.json <<EOF
-{
-  "signing": {
-    "default": {
-      "expiry": "8760h"
-    },
-    "profiles": {
-      "keycloak": {
-        "usages": ["signing", "key encipherment", "server auth", "client auth"],
-        "expiry": "8760h"
-      }
-    }
-  }
-}
-EOF
+# cat > keycloak-csr.json <<EOF
+# {
+#   "CN": "eastus2-vm-meddist-keycloak.eastus2.cloudapp.azure.com",
+#   "key": {
+#     "algo": "rsa",
+#     "size": 2048
+#   },
+#   "names": [
+#     {
+#       "C": "US",
+#       "L": "SF",
+#       "O": "cudase",
+#       "OU": "JWT demo",
+#       "ST": "CA"
+#     }
+#   ]
+# }
+# EOF
 
-cat > ca-csr.json <<EOF
-{
-  "CN": "useast2-vm-meddist-keycloak.eastus2.cloudapp.azure.com",
-  "key": {
-    "algo": "rsa",
-    "size": 2048
-  },
-  "names": [
-    {
-      "C": "US",
-      "L": "SF",
-      "O": "Keycloak",
-      "OU": "CA",
-      "ST": "CA"
-    }
-  ]
-}
-EOF
+# cfssl gencert \
+#   -ca=ca.pem \
+#   -ca-key=ca-key.pem \
+#   -config=ca-config.json \
+#   -hostname=eastus2-vm-meddist-keycloak.eastus2.cloudapp.azure.com \
+#   -profile=keycloak \
+#   keycloak-csr.json | cfssljson -bare keycloak
 
-cfssl gencert -initca ca-csr.json | cfssljson -bare ca
+# }
+# ls -l
 
-}
-
-
-# Server certificate
-
-{ 
-
-cat > keycloak-csr.json <<EOF
-{
-  "CN": "useast2-vm-meddist-keycloak.eastus2.cloudapp.azure.com",
-  "key": {
-    "algo": "rsa",
-    "size": 2048
-  },
-  "names": [
-    {
-      "C": "US",
-      "L": "SF",
-      "O": "cudase",
-      "OU": "JWT demo",
-      "ST": "CA"
-    }
-  ]
-}
-EOF
-
-cfssl gencert \
-  -ca=ca.pem \
-  -ca-key=ca-key.pem \
-  -config=ca-config.json \
-  -hostname=useast2-vm-meddist-keycloak.eastus2.cloudapp.azure.com \
-  -profile=keycloak \
-  keycloak-csr.json | cfssljson -bare keycloak
-
-}
-ls -l
-
-echo "moving keycloak certificates"
-sudo cp keycloak-key.pem /etc/nginx/cert.key
-sudo cp keycloak.pem /etc/nginx/cert.crt 
+# echo "moving keycloak certificates"
+# sudo cp keycloak-key.pem /etc/nginx/cert.key
+# sudo cp keycloak.pem /etc/nginx/cert.crt 
 
 ls -l
 # NGINX Configuration
@@ -133,7 +147,7 @@ server {
     
     listen 80;
     listen 443 default ssl;
-    server_name useast2-vm-meddist-keycloak.eastus2.cloudapp.azure.com;
+    server_name eastus2-vm-meddist-keycloak.eastus2.cloudapp.azure.com;
 
     ssl_certificate           /etc/nginx/cert.crt;
     ssl_certificate_key       /etc/nginx/cert.key;
