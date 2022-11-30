@@ -86,6 +86,8 @@
         }
     },
     "variables": {
+        "storageaccountname": "[parameters('storageaccountname')]",
+        "storageaccountkey": "[parameters('storageaccountkey')]",
         "vmname": "[parameters('vmname')]",
         "vmstorage": "[parameters('vmstorage')]",
         "vmnsg": "[parameters('vmnsg')]",
