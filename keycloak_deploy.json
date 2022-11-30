@@ -271,33 +271,6 @@
                     }
                 }
             }
-        },
-        {
-            "name": "[variables('customscript')]",
-            "type": "Microsoft.Compute/virtualMachines/extensions",
-            "apiVersion": "2021-03-01",
-            "location": "[resourceGroup().location]",
-            "tags": {
-                "displayName": "customScript1 for Linux VM"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Compute/virtualMachines', variables('vmname'))]"
-            ],
-            "properties": {
-                "publisher": "Microsoft.Azure.Extensions",
-                "type": "CustomScript",
-                "typeHandlerVersion": "2.1",
-                "autoUpgradeMinorVersion": true,
-                "settings": {},
-                "protectedSettings": {
-                    "commandToExecute": "nohup bash customscript.sh",
-                    "storageAccountName": "[variables('storageaccountname')]",
-                    "storageAccountKey": "[variables('storageaccountkey')]",
-                    "fileUris": [
-                        "https://useast2saccgeneralthings.blob.core.windows.net/customscript/customscript.sh"
-                    ]
-                }
-            }
         }
     ],
     "outputs": {}
