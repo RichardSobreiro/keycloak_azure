@@ -293,7 +293,6 @@
                     "commandToExecute": "nohup bash customscript.sh",
                     "storageAccountName": "[variables('storageaccountname')]",
                     "storageAccountKey": "[variables('storageaccountkey')]",
-                    "managedIdentity" : {},
                     "fileUris": [
                         "https://useast2saccgeneralthings.blob.core.windows.net/customscript/customscript.sh"
                     ]
