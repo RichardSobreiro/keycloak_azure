@@ -31,7 +31,7 @@ sudo systemctl enable docker
 sudo apt-get -y install nginx
 
 # Install keycloak as a docker container
-sudo docker run -d -p 8080:8080 -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=pass -e PROXY_ADDRESS_FORWARDING=true jboss/keycloak
+sudo docker run -d -t -p 8080:8080 -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=pass -e PROXY_ADDRESS_FORWARDING=true jboss/keycloak
 
 # Azure cli
 sudo apt-get -y update
